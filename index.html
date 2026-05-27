@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#2d3d1e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Lubicz">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.svg">
+<title>Sprawności — Lubicz</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Cinzel:wght@500;700&display=swap');
+
+  :root {
+    --ink: #1a1208;
+    --parchment: #f7f2e4;
+    --parchment-dark: #eee6cc;
+    --green-dark: #2d3d1e;
+    --green: #3B6D11;
+    --green-light: #EAF3DE;
+    --green-mid: #639922;
+    --amber: #BA7517;
+    --amber-light: #FAEEDA;
+    --gold: #9a7c2e;
+    --gold-light: #c9a84c;
+    --burgundy: #6b1a1a;
+    --border: rgba(154,124,46,0.25);
+    --shadow: 0 2px 12px rgba(45,61,30,0.10);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    background: var(--parchment);
+    color: var(--ink);
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.65;
+    min-height: 100vh;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* ── Top bar ── */
+  .topbar {
+    background: var(--green-dark);
+    color: #e8d8a0;
+    padding: 14px 16px 12px;
+    padding-top: calc(14px + env(safe-area-inset-top));
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .topbar-icon {
+    font-size: 22px;
+  }
+  .topbar-titles { flex: 1; }
+  .topbar h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #e8d8a0;
+    line-height: 1.2;
+  }
+  .topbar p {
+    font-size: 11px;
+    color: #a09060;
+    font-style: italic;
+  }
+  .topbar-name {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    color: #a09060;
+    text-align: right;
+  }
+
+  /* ── Main ── */
+  .main { padding: 12px 12px 32px; max-width: 600px; margin: 0 auto; }
+
+  /* ── Odznaki ── */
+  .odznaki-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    background: white;
+    border: 0.5px solid var(--border);
+    border-radius: 14px;
+    padding: 10px 14px;
+    align-items: center;
+  }
+  .odznaki-bar-label {
+    font-size: 11px;
+    color: #888;
+    font-style: italic;
+    margin-right: 4px;
+    flex-shrink: 0;
+  }
+  .odznaki-bar-items { display: flex; gap: 8px; flex: 1; justify-content: center; }
+  .odznaka-pill {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    font-size: 12px;
+    color: #aaa;
+    transition: all 0.3s;
+    font-family: 'Cinzel', serif;
+  }
+  .odznaka-pill .pill-stars { font-size: 10px; letter-spacing: 1px; color: #ccc; }
+  .odznaka-pill.earned {
+    background: var(--green-light);
+    border-color: var(--green-mid);
+    color: var(--green);
+  }
+  .odznaka-pill.earned .pill-stars { color: var(--green-mid); }
+
+  /* ── Sprawność card ── */
+  .sprawnosc-card {
+    background: white;
+    border: 0.5px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+
+  .sprawnosc-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 14px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .sprawnosc-header:active { background: var(--parchment); }
+
+  .stars { font-size: 14px; letter-spacing: 2px; flex-shrink: 0; }
+  .stars-1 { color: #C0DD97; }
+  .stars-2 { color: #EF9F27; }
+  .stars-3 { color: #D85A30; }
+
+  .sp-titles { flex: 1; min-width: 0; }
+  .sp-nazwa {
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--burgundy);
+  }
+  .sp-subtitle {
+    font-size: 11px;
+    color: #888;
+    font-style: italic;
+  }
+
+  .progress-pill {
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-weight: 600;
+    flex-shrink: 0;
+    font-family: 'Cinzel', serif;
+  }
+  .p0   { background: #f0ede4; color: #999; }
+  .part { background: var(--amber-light); color: var(--amber); }
+  .done { background: var(--green-light); color: var(--green); }
+
+  .chevron {
+    font-size: 18px;
+    color: #bbb;
+    transition: transform 0.25s;
+    flex-shrink: 0;
+  }
+  .chevron.open { transform: rotate(180deg); }
+
+  .sprawnosc-body {
+    display: none;
+    border-top: 0.5px solid var(--border);
+  }
+  .sprawnosc-body.open { display: block; }
+
+  /* ── Zadania ── */
+  .zadanie {
+    padding: 12px 14px;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .zadanie:last-of-type { border-bottom: none; }
+
+  .zadanie-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .check-box {
+    width: 22px;
+    height: 22px;
+    border: 1.5px solid #ccc;
+    border-radius: 5px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .check-box.checked {
+    background: var(--green-mid);
+    border-color: var(--green-mid);
+  }
+  .check-box svg { display: none; }
+  .check-box.checked svg { display: block; }
+
+  .zadanie-content { flex: 1; }
+  .zadanie-tekst {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .zadanie-tekst.done {
+    color: #bbb;
+    text-decoration: line-through;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    padding: 1px 6px;
+    border-radius: 3px;
+    margin-right: 5px;
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+  }
+  .tag-historia   { background: #EAF3DE; color: #27500A; }
+  .tag-charakter  { background: #FCEBEB; color: #791F1F; }
+  .tag-wywiad     { background: #FAEEDA; color: #633806; }
+  .tag-sztuka     { background: #E6F1FB; color: #0C447C; }
+  .tag-harcerstwo { background: #EEEDFE; color: #3C3489; }
+
+  .wskazowka-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: #aaa;
+    cursor: pointer;
+    margin-top: 6px;
+    background: none;
+    border: none;
+    font-family: 'EB Garamond', Georgia, serif;
+    padding: 0;
+  }
+  .wskazowka-btn:active { color: var(--gold); }
+  .wskazowka-btn svg { width:14px; height:14px; flex-shrink:0; }
+
+  .wskazowka-box {
+    display: none;
+    margin-top: 8px;
+    padding: 10px 12px;
+    background: var(--parchment);
+    border-left: 3px solid var(--gold-light);
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    color: #5a4a2a;
+    line-height: 1.55;
+    font-style: italic;
+  }
+  .wskazowka-box.open { display: block; }
+
+  /* ── Progress footer ── */
+  .sp-footer {
+    padding: 10px 14px;
+    background: var(--parchment);
+    border-top: 0.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .bar-bg {
+    flex: 1;
+    height: 5px;
+    background: #e8e0cc;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: var(--green-mid);
+    transition: width 0.35s ease;
+  }
+  .bar-fill.partial { background: #EF9F27; }
+  .bar-pct { font-size: 11px; color: #999; min-width: 30px; text-align: right; font-family: 'Cinzel', serif; }
+
+  /* ── Name input ── */
+  .name-section {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    background: white;
+    border: 0.5px solid var(--border);
+    border-radius: 14px;
+    padding: 10px 14px;
+  }
+  .name-section label { font-size: 13px; color: #888; font-style: italic; white-space: nowrap; }
+  .name-section input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    font-family: 'Cinzel', serif;
+    color: var(--ink);
+    outline: none;
+    min-width: 0;
+  }
+  .name-section input::placeholder { color: #ccc; font-family: 'EB Garamond', serif; font-style: italic; }
+
+  /* ── Install banner ── */
+  .install-banner {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    background: var(--green-dark);
+    color: #e8d8a0;
+    padding: 12px 14px;
+    border-radius: 12px;
+    margin-bottom: 14px;
+    font-size: 13px;
+  }
+  .install-banner.show { display: flex; }
+  .install-banner button {
+    background: var(--gold-light);
+    color: var(--green-dark);
+    border: none;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .install-banner-text { flex: 1; line-height: 1.4; }
+
+  .ios-hint {
+    display: none;
+    background: var(--parchment-dark);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+    font-size: 13px;
+    color: #5a4a2a;
+    line-height: 1.5;
+  }
+  .ios-hint.show { display: block; }
+  .ios-hint strong { font-weight: 600; color: var(--burgundy); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-icon">⚜</div>
+  <div class="topbar-titles">
+    <h1>Sprawności Drużynowe</h1>
+    <p>im. kpt. J.W. Stawskiego ps. „Lubicz"</p>
+  </div>
+  <div class="topbar-name" id="topbar-name"></div>
+</div>
+
+<div class="main">
+
+  <div class="install-banner" id="install-banner">
+    <div class="install-banner-text">Dodaj aplikację do ekranu głównego, żeby mieć ją zawsze pod ręką.</div>
+    <button id="install-btn">Zainstaluj</button>
+  </div>
+
+  <div class="ios-hint" id="ios-hint">
+    Aby dodać do ekranu głównego: naciśnij <strong>Udostępnij</strong> (☐↑) w Safari, a następnie <strong>„Dodaj do ekranu głównego"</strong>.
+  </div>
+
+  <div class="name-section">
+    <label for="harcerz-input">Druhna/Druh:</label>
+    <input type="text" id="harcerz-input" placeholder="Wpisz swoje imię..." autocomplete="off" />
+  </div>
+
+  <div class="odznaki-bar">
+    <span class="odznaki-bar-label">Zdobyte:</span>
+    <div class="odznaki-bar-items" id="odznaki-bar"></div>
+  </div>
+
+  <div id="cards-container"></div>
+
+</div>
+
+<script>
+const DATA = [
+  {
+    id: 'szary', stars: 1,
+    nazwa: '„Szary"',
+    subtitle: 'Dla młodzika · Harcerstwo i pamięć',
+    zadania: [
+      { id:'sz1', tag:'harcerstwo', tagLabel:'Harcerstwo',
+        tekst: 'Dowiedz się, czym były Szare Szeregi i do jakiej drużyny harcerskiej należał patron. Opowiedz o tym krótko na zbiórce zastępu.',
+        wskazowka: 'Szare Szeregi to konspiracyjna organizacja harcerska z czasów II wojny. Patron należał do 20. Łódzkiej Drużyny Harcerskiej im. Zawiszy Czarnego, a łódzka chorągiew miała kryptonim „Kominy".' },
+      { id:'sz2', tag:'charakter', tagLabel:'Charakter',
+        tekst: 'Porozmawiaj z osobą starszą — dziadkiem, sąsiadem lub weteranem — o jej wspomnieniach z przeszłości i krótko zrelacjonuj tę rozmowę drużynowemu.',
+        wskazowka: 'Nie musisz rozmawiać tylko o wojnie. Zapytaj o dzieciństwo, szkołę, jak wyglądało życie. Ważna jest autentyczna rozmowa, a nie encyklopedyczna wiedza.' },
+      { id:'sz3', tag:'historia', tagLabel:'Historia',
+        tekst: 'Odwiedź miejsce pamięci narodowej (grób, pomnik, tablica) i złóż tam kwiaty lub zapal znicz. Powiedz zastępowi, kogo to miejsce upamiętnia i dlaczego jest ważne.',
+        wskazowka: 'Może to być grób żołnierza AK, pomnik Szarych Szeregów lub tablica upamiętniająca ofiary wojny. Szukaj przy szkole, kościele lub centrum miasta. Zrób zdjęcie — może trafić do kroniki drużyny.' }
+    ]
+  },
+  {
+    id: 'zubr', stars: 2,
+    nazwa: '„Żubr"',
+    subtitle: 'Dla wywiadowcy · Konspiracja i czyn',
+    zadania: [
+      { id:'zu1', tag:'historia', tagLabel:'Historia',
+        tekst: 'Wygłoś 5–10-minutową gawędę o patronie na ognisku lub kominku drużyny — opierając się na jego życiorysie: harcerstwie, akcjach AK i losach po wojnie.',
+        wskazowka: 'Kluczowe fakty: ur. 1927 r. w Łodzi, 20. ŁDH, Szare Szeregi „Kominy", AK placówka „Żubr", akcja likwidacji szefa Gestapo w Radomsku (1943), uwolnienie więźniów. Po wojnie malarz, zm. 2022 r. Materiały: opowiedziane.ipn.gov.pl → szukaj „Stawski Jerzy".' },
+      { id:'zu2', tag:'wywiad', tagLabel:'Wywiad',
+        tekst: 'Przeprowadź dla zastępu grę terenową nawiązującą do konspiracji: z zaszyfrowaną wiadomością, znakami patrolowymi lub elementem obserwacji i tropienia.',
+        wskazowka: 'Przykład: ukryj zaszyfrowaną wiadomość (szyfr Cezara lub znaki patrolowe), podziel zastęp na grupy — jedna ukrywa, druga szuka i odczytuje. Ustal granice terenu i hasło bezpieczeństwa.' },
+      { id:'zu3', tag:'charakter', tagLabel:'Charakter',
+        tekst: 'Przez tydzień codziennie przez 20 minut bądź w ciszy i obserwuj otoczenie. Zapisuj spostrzeżenia w notatniku. Na koniec podziel się jednym wnioskiem z zastępowym.',
+        wskazowka: 'Chodzi o nawyk uważnego patrzenia, kluczowy w konspiracji. Co widzisz, czego normalnie nie zauważasz? Zmiany w otoczeniu, zachowania ludzi, szczegóły budynków. Patron jako malarz i żołnierz robił to przez całe życie.' }
+    ]
+  },
+  {
+    id: 'lubicz', stars: 3,
+    nazwa: '„Lubicz"',
+    subtitle: 'Dla ćwika i starszych · Służba i twórczość',
+    zadania: [
+      { id:'lu1', tag:'historia', tagLabel:'Historia',
+        tekst: 'Dotrzyj do co najmniej dwóch źródeł o patronie i napisz krótki tekst biograficzny (min. pół strony A4), który wejdzie do kroniki drużyny.',
+        wskazowka: 'Zacznij od: opowiedziane.ipn.gov.pl (szukaj „Stawski Jerzy") — jest tam nagranie wideo ze wspomnieniami patrona. Drugie źródło: Wikipedia lub archiwum Instytutu Pileckiego. Tekst powinien zawierać własne wnioski, nie tylko przepisany życiorys.' },
+      { id:'lu2', tag:'sztuka', tagLabel:'Sztuka',
+        tekst: 'Wykonaj pracę plastyczną dowolną techniką (rysunek, obraz, linoryt) przedstawiającą patrona lub wartości, które reprezentował. Praca trafia do stałej kolekcji drużyny.',
+        wskazowka: 'Patron przez całe życie malował — ta praca jest hołdem dla tej części jego tożsamości. Temat dowolny: portret, scena z akcji AK, symbol konspiracji, krajobraz Łodzi. Liczy się zaangażowanie, nie poziom artystyczny.' },
+      { id:'lu3', tag:'charakter', tagLabel:'Charakter',
+        tekst: 'Przez minimum miesiąc pełnij konkretną służbę na rzecz środowiska lokalnego (wolontariat, opieka nad miejscem pamięci, pomoc weteranom) i opowiedz o niej na zbiórce.',
+        wskazowka: 'Służba może być skromna, ale regularna: cotygodniowa pomoc sąsiadce, utrzymanie czystości przy pomniku, wizyta u kombatanta. Patron mimo represji komunistycznych służył Polsce przez sztukę i pamięć przez całe życie — ważna jest ciągłość.' }
+    ]
+  }
+];
+
+function getState() {
+  try { const s = localStorage.getItem('lubicz_v2'); return s ? JSON.parse(s) : { name:'', checked:{} }; }
+  catch(e) { return { name:'', checked:{} }; }
+}
+function saveState() {
+  try { localStorage.setItem('lubicz_v2', JSON.stringify(state)); } catch(e) {}
+}
+
+let state = getState();
+let openCards = { szary: true };
+let openW = {};
+
+function getProgress(sp) {
+  const done = sp.zadania.filter(z => state.checked[z.id]).length;
+  return { done, total: sp.zadania.length };
+}
+
+function render() {
+  document.getElementById('topbar-name').textContent = state.name ? state.name : '';
+
+  const container = document.getElementById('cards-container');
+  container.innerHTML = '';
+
+  DATA.forEach(sp => {
+    const { done, total } = getProgress(sp);
+    const pct = Math.round(done / total * 100);
+    const isOpen = !!openCards[sp.id];
+    const pClass = done === 0 ? 'p0' : done === total ? 'done' : 'part';
+    const pLabel = done === total ? 'Gotowe ✓' : done + '/' + total;
+    const starsHtml = '★'.repeat(sp.stars);
+    const starsClass = ['','stars-1','stars-2','stars-3'][sp.stars];
+
+    const card = document.createElement('div');
+    card.className = 'sprawnosc-card';
+    card.innerHTML = `
+      <div class="sprawnosc-header" data-id="${sp.id}">
+        <span class="stars ${starsClass}">${starsHtml}</span>
+        <div class="sp-titles">
+          <div class="sp-nazwa">${sp.nazwa}</div>
+          <div class="sp-subtitle">${sp.subtitle}</div>
+        </div>
+        <span class="progress-pill ${pClass}">${pLabel}</span>
+        <span class="chevron ${isOpen?'open':''}">&#8964;</span>
+      </div>
+      <div class="sprawnosc-body ${isOpen?'open':''}">
+        ${sp.zadania.map(z => {
+          const checked = !!state.checked[z.id];
+          const wOpen = !!openW[z.id];
+          return `
+          <div class="zadanie">
+            <div class="zadanie-top">
+              <div class="check-box ${checked?'checked':''}" data-zid="${z.id}" role="checkbox" aria-checked="${checked}" tabindex="0">
+                <svg viewBox="0 0 12 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="1,5 4.5,9 11,1"/>
+                </svg>
+              </div>
+              <div class="zadanie-content">
+                <div class="zadanie-tekst ${checked?'done':''}">
+                  <span class="tag tag-${z.tag}">${z.tagLabel}</span>${z.tekst}
+                </div>
+                <button class="wskazowka-btn" data-wid="${z.id}">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                  ${wOpen ? 'Ukryj wskazówkę' : 'Wskazówka drużynowego'}
+                </button>
+                <div class="wskazowka-box ${wOpen?'open':''}">${z.wskazowka}</div>
+              </div>
+            </div>
+          </div>`;
+        }).join('')}
+        <div class="sp-footer">
+          <div class="bar-bg">
+            <div class="bar-fill ${done>0&&done<total?'partial':''}" style="width:${pct}%"></div>
+          </div>
+          <span class="bar-pct">${pct}%</span>
+        </div>
+      </div>`;
+
+    card.querySelector('.sprawnosc-header').addEventListener('click', () => {
+      openCards[sp.id] = !openCards[sp.id]; render();
+    });
+    card.querySelectorAll('.check-box').forEach(el => {
+      const go = () => {
+        state.checked[el.dataset.zid] = !state.checked[el.dataset.zid];
+        saveState(); render();
+      };
+      el.addEventListener('click', go);
+      el.addEventListener('keydown', e => { if(e.key===' '||e.key==='Enter'){e.preventDefault();go();} });
+    });
+    card.querySelectorAll('.wskazowka-btn').forEach(el => {
+      el.addEventListener('click', e => {
+        e.stopPropagation();
+        openW[el.dataset.wid] = !openW[el.dataset.wid]; render();
+      });
+    });
+    container.appendChild(card);
+  });
+
+  renderOdznaki();
+}
+
+function renderOdznaki() {
+  const bar = document.getElementById('odznaki-bar');
+  bar.innerHTML = DATA.map(sp => {
+    const { done, total } = getProgress(sp);
+    const earned = done === total;
+    return `<div class="odznaka-pill ${earned?'earned':''}">
+      <span class="pill-stars">${'★'.repeat(sp.stars)}</span>
+      <span>${sp.nazwa.replace(/[„"]/g,'')}</span>
+    </div>`;
+  }).join('');
+}
+
+const nameInput = document.getElementById('harcerz-input');
+nameInput.value = state.name || '';
+nameInput.addEventListener('input', () => { state.name = nameInput.value; saveState(); render(); });
+
+render();
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('install-banner').classList.add('show');
+});
+document.getElementById('install-btn').addEventListener('click', () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => {
+      deferredPrompt = null;
+      document.getElementById('install-banner').classList.remove('show');
+    });
+  }
+});
+window.addEventListener('appinstalled', () => {
+  document.getElementById('install-banner').classList.remove('show');
+});
+
+const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+if (isIOS && !isStandalone) {
+  document.getElementById('ios-hint').classList.add('show');
+}
+</script>
+</body>
+</html>

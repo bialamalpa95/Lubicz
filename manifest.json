@@ -1,0 +1,17 @@
+{
+  "name": "Sprawności — Lubicz",
+  "short_name": "Lubicz",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#f7f2e4",
+  "theme-color": "#2d3d1e",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "Logo XXI LDH.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    }
+  ]
+}
