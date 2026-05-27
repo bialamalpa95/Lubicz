@@ -367,6 +367,57 @@
   }
   .ios-hint.show { display: block; }
   .ios-hint strong { font-weight: 600; color: var(--burgundy); }
+
+  /* ── Modal gratulacyjny ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.show { display: flex; }
+  .modal-box {
+    background: var(--parchment);
+    border-radius: 20px;
+    max-width: 360px;
+    width: 100%;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+    text-align: center;
+    animation: modalIn 0.35s ease;
+  }
+  @keyframes modalIn {
+    from { transform: scale(0.85); opacity: 0; }
+    to   { transform: scale(1);    opacity: 1; }
+  }
+  .modal-img {
+    width: 100%;
+    max-height: 260px;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+  }
+  .modal-body { padding: 20px 22px 24px; }
+  .modal-stars { font-size: 26px; letter-spacing: 4px; color: var(--gold-light); margin-bottom: 10px; }
+  .modal-title { font-family: 'Cinzel', serif; font-size: 18px; font-weight: 700; color: var(--burgundy); margin-bottom: 8px; }
+  .modal-text { font-size: 14px; color: var(--ink); line-height: 1.6; font-style: italic; margin-bottom: 12px; }
+  .modal-caption { font-size: 11px; color: #999; margin-bottom: 16px; }
+  .modal-close {
+    background: var(--green-dark);
+    color: #e8d8a0;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 28px;
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .modal-close:active { opacity: 0.8; }
 </style>
 </head>
 <body>
@@ -403,6 +454,19 @@
 
   <div id="cards-container"></div>
 
+</div>
+
+<div class="modal-overlay" id="congrats-modal">
+  <div class="modal-box">
+    <img class="modal-img" src="https://opowiedziane.ipn.gov.pl/dokumenty/zalaczniki/257/257-56566.jpg" alt="kpt. Jerzy Stawski ps. Lubicz">
+    <div class="modal-body">
+      <div class="modal-stars">★★★</div>
+      <div class="modal-title">Wszystkie sprawności zdobyte!</div>
+      <div class="modal-text">Ukończyłeś wszystkie zadania drużynowe.<br>Czuwaj, druhu!</div>
+      <div class="modal-caption">kpt. Jerzy Włodzimierz Stawski ps. „Lubicz" (1927–2022)<br>Fot. © IPN / opowiedziane.ipn.gov.pl</div>
+      <button class="modal-close" id="modal-close-btn">Zamknij</button>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -574,6 +638,28 @@ nameInput.value = state.name || '';
 nameInput.addEventListener('input', () => { state.name = nameInput.value; saveState(); render(); });
 
 render();
+
+render();
+
+// Modal gratulacyjny
+let modalShown = false;
+function checkAllDone() {
+  const allDone = DATA.every(sp => sp.zadania.every(z => state.checked[z.id]));
+  if (allDone && !modalShown) {
+    modalShown = true;
+    document.getElementById('congrats-modal').classList.add('show');
+  }
+}
+document.getElementById('modal-close-btn').addEventListener('click', () => {
+  document.getElementById('congrats-modal').classList.remove('show');
+});
+document.getElementById('congrats-modal').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) e.currentTarget.classList.remove('show');
+});
+checkAllDone();
+document.addEventListener('click', (e) => {
+  if (e.target.closest('.check-box')) setTimeout(checkAllDone, 50);
+});
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js').catch(() => {});
