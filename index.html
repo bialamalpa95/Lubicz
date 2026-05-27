@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Lubicz">
 <link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icon-192.svg">
+<link rel="apple-touch-icon" href="Logo XXI LDH.png">
 <title>Sprawności — Lubicz</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Cinzel:wght@500;700&display=swap');
@@ -374,8 +374,8 @@
 <div class="topbar">
   <div class="topbar-icon">⚜</div>
   <div class="topbar-titles">
-    <h1>Sprawności Drużynowe</h1>
-    <p>im. kpt. J.W. Stawskiego ps. „Lubicz"</p>
+    <h1>Sprawności XXI Łódzkiej Drużyny Harcerzy</h1>
+    <p>im. kpt. Jerzego Włodzimierza Stawskiego ps. „Lubicz"</p>
   </div>
   <div class="topbar-name" id="topbar-name"></div>
 </div>
@@ -458,7 +458,7 @@ const DATA = [
 ];
 
 function getState() {
-  try { const s = localStorage.getItem('lubicz_v2'); return s ? JSON.parse(s) : { name:'', checked:{} }; }
+  try { const s = localStorage.getItem('lubicz_v3'); return s ? JSON.parse(s) : { name:'', checked:{} }; }
   catch(e) { return { name:'', checked:{} }; }
 }
 function saveState() {
