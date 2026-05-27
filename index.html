@@ -6,10 +6,10 @@
 <meta name="theme-color" content="#2d3d1e">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Lubicz">
+<meta name="apple-mobile-web-app-title" content="XXI ŁDH">
 <link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="Logo XXI LDH.png">
-<title>Sprawności — Lubicz</title>
+<link rel="apple-touch-icon" href="icon-192.svg">
+<title>XXI Łódzka Drużyna Harcerzy</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Cinzel:wght@500;700&display=swap');
 
@@ -372,10 +372,10 @@
 <body>
 
 <div class="topbar">
-  <div class="topbar-icon">⚜</div>
+  <img src="Logo XXI ŁDH.png" style="height:40px;width:40px;object-fit:contain;border-radius:50%;flex-shrink:0;">
   <div class="topbar-titles">
-    <h1>Sprawności XXI Łódzkiej Drużyny Harcerzy</h1>
-    <p>im. kpt. Jerzego Włodzimierza Stawskiego ps. „Lubicz"</p>
+    <h1>XXI Łódzka Drużyna Harcerzy</h1>
+    <p>im. kpt. J.W. Stawskiego ps. „Lubicz"</p>
   </div>
   <div class="topbar-name" id="topbar-name"></div>
 </div>
@@ -458,7 +458,7 @@ const DATA = [
 ];
 
 function getState() {
-  try { const s = localStorage.getItem('lubicz_v3'); return s ? JSON.parse(s) : { name:'', checked:{} }; }
+  try { const s = localStorage.getItem('lubicz_v2'); return s ? JSON.parse(s) : { name:'', checked:{} }; }
   catch(e) { return { name:'', checked:{} }; }
 }
 function saveState() {
