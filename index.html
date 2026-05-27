@@ -474,49 +474,55 @@ const DATA = [
   {
     id: 'szary', stars: 1,
     nazwa: '„Szary"',
-    subtitle: 'Dla młodzika · Harcerstwo i pamięć',
+    subtitle: 'Sprawność I stopnia',
     zadania: [
-      { id:'sz1', tag:'harcerstwo', tagLabel:'Harcerstwo',
-        tekst: 'Dowiedz się, czym były Szare Szeregi i do jakiej drużyny harcerskiej należał patron. Opowiedz o tym krótko na zbiórce zastępu.',
-        wskazowka: 'Szare Szeregi to konspiracyjna organizacja harcerska z czasów II wojny. Patron należał do 20. Łódzkiej Drużyny Harcerskiej im. Zawiszy Czarnego, a łódzka chorągiew miała kryptonim „Kominy".' },
-      { id:'sz2', tag:'charakter', tagLabel:'Charakter',
-        tekst: 'Porozmawiaj z osobą starszą — dziadkiem, sąsiadem lub weteranem — o jej wspomnieniach z przeszłości i krótko zrelacjonuj tę rozmowę drużynowemu.',
-        wskazowka: 'Nie musisz rozmawiać tylko o wojnie. Zapytaj o dzieciństwo, szkołę, jak wyglądało życie. Ważna jest autentyczna rozmowa, a nie encyklopedyczna wiedza.' },
-      { id:'sz3', tag:'historia', tagLabel:'Historia',
-        tekst: 'Odwiedź miejsce pamięci narodowej (grób, pomnik, tablica) i złóż tam kwiaty lub zapal znicz. Powiedz zastępowi, kogo to miejsce upamiętnia i dlaczego jest ważne.',
-        wskazowka: 'Może to być grób żołnierza AK, pomnik Szarych Szeregów lub tablica upamiętniająca ofiary wojny. Szukaj przy szkole, kościele lub centrum miasta. Zrób zdjęcie — może trafić do kroniki drużyny.' }
+      { id:'sz1', tag:'historia', tagLabel:'Historia',
+        tekst: 'Poznaj sylwetkę kapitana Jerzego Stawskiego. Poda 3 daty z jego życia.',
+        wskazowka: 'Kluczowe daty: ur. 1 stycznia 1927 r. w Łodzi, akcja likwidacji szefa Gestapo w Radomsku 25 maja 1943 r., uwolnienie więźniów z więzienia w Radomsku 7–8 sierpnia 1943 r., zm. 28 lipca 2022 r. Materiały: opowiedziane.ipn.gov.pl → szukaj „Stawski Jerzy".' },
+      { id:'sz2', tag:'harcerstwo', tagLabel:'Harcerstwo',
+        tekst: 'Dowiedział się, czym były Szare Szeregi i do jakiej drużyny harcerskiej należał patron. Opowie o tym krótko na zbiórce zastępu.',
+        wskazowka: 'Szare Szeregi to konspiracyjna organizacja harcerska działająca w Polsce w czasie II wojny światowej. Patron należał do 20. Łódzkiej Drużyny Harcerskiej im. Zawiszy Czarnego, a łódzka chorągiew miała kryptonim „Kominy".' },
+      { id:'sz3', tag:'harcerstwo', tagLabel:'Harcerstwo',
+        tekst: 'Zna 5 elementów obrzędowości drużyny — opowie o nich na zbiórce zastępu.',
+        wskazowka: 'Elementy obrzędowości to m.in.: piosenka drużyny, zawołanie, hasło, patron, krzyż harcerski, mundur, ceremoniał apelu. Zapytaj drużynowego o charakterystyczne tradycje Waszej drużyny.' },
+      { id:'sz4', tag:'charakter', tagLabel:'Charakter',
+        tekst: 'Odwiedził miejsce pamięci narodowej (grób, pomnik, tablica) i złożył tam kwiaty lub zapalił znicz. Opowiedział zastępowi, kogo to miejsce upamiętnia i dlaczego jest ważne.',
+        wskazowka: 'Może to być grób patrona na Cmentarzu Doły w Łodzi (kwatera 130, rząd 1, grób 15), pomnik AK lub tablica upamiętniająca żołnierzy wyklętych. Przygotuj krótką opowieść o tym miejscu.' },
+      { id:'sz5', tag:'charakter', tagLabel:'Charakter',
+        tekst: 'Weźmie udział w wartach przy grobie Patrona 1 listopada.',
+        wskazowka: 'Warty przy grobie kpt. Stawskiego na Cmentarzu Doły to ważna tradycja drużyny. Skontaktuj się z drużynowym, aby dowiedzieć się o szczegółach organizacji wart 1 listopada.' }
     ]
   },
   {
     id: 'zubr', stars: 2,
     nazwa: '„Żubr"',
-    subtitle: 'Dla wywiadowcy · Konspiracja i czyn',
+    subtitle: 'Sprawność II stopnia',
     zadania: [
-      { id:'zu1', tag:'historia', tagLabel:'Historia',
+      { id:'zu1', tag:'harcerstwo', tagLabel:'Harcerstwo',
+        tekst: 'Przeprowadzi dla drużyny grę terenową nawiązującą do konspiracji.',
+        wskazowka: 'Przykład: ukryj zaszyfrowaną wiadomość (szyfr Cezara lub znaki patrolowe), podziel drużynę na grupy — jedna ukrywa, druga szuka i odczytuje. Ustal granice terenu i hasło bezpieczeństwa. Możesz nawiązać do akcji, w których brał udział patron.' },
+      { id:'zu2', tag:'historia', tagLabel:'Historia',
         tekst: 'Wygłoś 5–10-minutową gawędę o patronie na ognisku lub kominku drużyny — opierając się na jego życiorysie: harcerstwie, akcjach AK i losach po wojnie.',
         wskazowka: 'Kluczowe fakty: ur. 1927 r. w Łodzi, 20. ŁDH, Szare Szeregi „Kominy", AK placówka „Żubr", akcja likwidacji szefa Gestapo w Radomsku (1943), uwolnienie więźniów. Po wojnie malarz, zm. 2022 r. Materiały: opowiedziane.ipn.gov.pl → szukaj „Stawski Jerzy".' },
-      { id:'zu2', tag:'wywiad', tagLabel:'Wywiad',
-        tekst: 'Przeprowadź dla zastępu grę terenową nawiązującą do konspiracji: z zaszyfrowaną wiadomością, znakami patrolowymi lub elementem obserwacji i tropienia.',
-        wskazowka: 'Przykład: ukryj zaszyfrowaną wiadomość (szyfr Cezara lub znaki patrolowe), podziel zastęp na grupy — jedna ukrywa, druga szuka i odczytuje. Ustal granice terenu i hasło bezpieczeństwa.' },
       { id:'zu3', tag:'charakter', tagLabel:'Charakter',
-        tekst: 'Przez tydzień codziennie przez 20 minut bądź w ciszy i obserwuj otoczenie. Zapisuj spostrzeżenia w notatniku. Na koniec podziel się jednym wnioskiem z zastępowym.',
-        wskazowka: 'Chodzi o nawyk uważnego patrzenia, kluczowy w konspiracji. Co widzisz, czego normalnie nie zauważasz? Zmiany w otoczeniu, zachowania ludzi, szczegóły budynków. Patron jako malarz i żołnierz robił to przez całe życie.' }
+        tekst: 'Wraz z zastępem odwiedź grób Patrona na jednej ze zbiórek (zapalenie znicza, uprzątnięcie, umycie nagrobka etc.).',
+        wskazowka: 'Grób kpt. Jerzego Stawskiego ps. „Lubicz" znajduje się na Cmentarzu Doły w Łodzi, kwatera 130, rząd 1, grób 15. Zaplanuj wizytę z zastępem, przygotujcie znicz i zadbajcie o otoczenie nagrobka.' }
     ]
   },
   {
     id: 'lubicz', stars: 3,
     nazwa: '„Lubicz"',
-    subtitle: 'Dla ćwika i starszych · Służba i twórczość',
+    subtitle: 'Sprawność III stopnia',
     zadania: [
       { id:'lu1', tag:'historia', tagLabel:'Historia',
         tekst: 'Dotrzyj do co najmniej dwóch źródeł o patronie i napisz krótki tekst biograficzny (min. pół strony A4), który wejdzie do kroniki drużyny.',
-        wskazowka: 'Zacznij od: opowiedziane.ipn.gov.pl (szukaj „Stawski Jerzy") — jest tam nagranie wideo ze wspomnieniami patrona. Drugie źródło: Wikipedia lub archiwum Instytutu Pileckiego. Tekst powinien zawierać własne wnioski, nie tylko przepisany życiorys.' },
-      { id:'lu2', tag:'sztuka', tagLabel:'Sztuka',
-        tekst: 'Wykonaj pracę plastyczną dowolną techniką (rysunek, obraz, linoryt) przedstawiającą patrona lub wartości, które reprezentował. Praca trafia do stałej kolekcji drużyny.',
-        wskazowka: 'Patron przez całe życie malował — ta praca jest hołdem dla tej części jego tożsamości. Temat dowolny: portret, scena z akcji AK, symbol konspiracji, krajobraz Łodzi. Liczy się zaangażowanie, nie poziom artystyczny.' },
+        wskazowka: 'Zacznij od: opowiedziane.ipn.gov.pl (szukaj „Stawski Jerzy") — jest tam nagranie wideo ze wspomnieniami patrona. Drugie źródło: Wikipedia lub archiwum IPN. Tekst powinien zawierać własne wnioski, nie tylko przepisany życiorys.' },
+      { id:'lu2', tag:'charakter', tagLabel:'Charakter',
+        tekst: 'Przygotował i przeprowadził zbiórkę drużyny dotyczącą Bohatera.',
+        wskazowka: 'Zaplanuj całą zbiórkę wokół postaci patrona: gawęda, gra terenowa nawiązująca do jego historii, element obrzędowości. Możesz zaprosić kogoś, kto go znał, lub zaprezentować materiały archiwalne z IPN.' },
       { id:'lu3', tag:'charakter', tagLabel:'Charakter',
-        tekst: 'Przez minimum miesiąc pełnij konkretną służbę na rzecz środowiska lokalnego (wolontariat, opieka nad miejscem pamięci, pomoc weteranom) i opowiedz o niej na zbiórce.',
-        wskazowka: 'Służba może być skromna, ale regularna: cotygodniowa pomoc sąsiadce, utrzymanie czystości przy pomniku, wizyta u kombatanta. Patron mimo represji komunistycznych służył Polsce przez sztukę i pamięć przez całe życie — ważna jest ciągłość.' }
+        tekst: 'Zaplanuje i pokieruje wartami przy grobie Patrona.',
+        wskazowka: 'Warty przy grobie to ważny element harcerskiej służby pamięci. Zaplanuj obsadę wart, czas trwania, ceremoniał zmiany. Szczególnie ważna data to 1 listopada — Wszystkich Świętych.' }
     ]
   }
 ];
